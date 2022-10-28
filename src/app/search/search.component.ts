@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { PastrieService } from '../pastrie.service';
 
 @Component({
@@ -11,14 +10,15 @@ export class SearchComponent implements OnInit {
 
   constructor(private service: PastrieService) { }
 
-  @Output() searchValue: EventEmitter<string> = new EventEmitter();
+  @Output() word = new EventEmitter<string>();
+  newValue: string = '';
 
   ngOnInit(): void {
   }
 
-  onSubmit(form: NgForm): void {
-    console.log(form.value['word']); // récupération d'une valeur spécifique
-    this.service.search(form.value['word']);
-    this.searchValue.emit(form.value['word']);
+  onChangeEmit(word: string) {
+    this.newValue = word;
+    this.word.emit(word);
+    this.service.search(word);
   }
 }

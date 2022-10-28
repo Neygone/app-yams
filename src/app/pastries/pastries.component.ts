@@ -22,11 +22,12 @@ export class PastriesComponent implements OnInit {
   button: HTMLButtonElement | undefined;
   start: number = 0;
   end: number = this.pastries.length / 2;
+  searchInput: string = '';
 
   constructor(private service: PastrieService) { }
 
   ngOnInit(): void {
-     this.filteredPastries = this.service.paginate(this.start, this.end);
+    this.changePages();
   }
 
   onSelect(pastrie: Pastrie): void {
@@ -42,11 +43,6 @@ export class PastriesComponent implements OnInit {
           if(this.favoritePastries.length < 3) {
             this.favoritePastries.push(pastrie);
           }
-          else {
-            this.pastries.forEach((pastrie) => {
-              if(pastrie.priority === Favorite.NOFAV) console.log(this.button);
-            });
-          }
         }
         else {
           const index = this.favoritePastries.findIndex(p => p.id === id);
@@ -61,5 +57,10 @@ export class PastriesComponent implements OnInit {
 
   count(): number {
     return this.pastries.length;
+  }
+
+  searchPastries(word: string): void {
+    this.searchInput = word;
+    this.filteredPastries = this.service.search(word);
   }
 }

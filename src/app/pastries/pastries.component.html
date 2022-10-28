@@ -1,6 +1,6 @@
 <h1>{{ titlePage }}</h1>
 
-<app-search (searchValue)="pastries"></app-search>
+<app-search (word)="searchPastries($event)"></app-search>
 
 <ul *ngIf="filteredPastries">
     <li *ngFor="let pastrie of filteredPastries" (click)="onSelect(pastrie)">
@@ -20,3 +20,4 @@
 <div *ngIf="end < pastries.length">
     <button (click)="start = end; end = end * 2; changePages()">Suivant</button>
 </div>
+<!-- Ne pas afficher les boutons si il y a 4 pâtisseries ou moins. -->

@@ -19,6 +19,8 @@ export class PastrieDetailsComponent implements OnInit {
   sens: boolean = true;
   ingredientsLists: List[] = INGREDIENTS_LISTS; // récupération de la liste des listes d'ingrédients
   ingredients: Array<string> = [];
+  favoritePastriesId: Array<Pastrie> = [];
+  pastries: Array<Pastrie> = PASTRIES;
 
   constructor() {
   }
@@ -34,7 +36,7 @@ export class PastrieDetailsComponent implements OnInit {
     // des ingrédients.
     if(this.pastrie) {
 
-      console.log(this.pastrie);
+      // console.log(this.pastrie);
 
       // récupération de la liste des ingrédients
       this.ingredients = this.ingredientsLists.find(elem => elem.id === this.pastrie?.id)?.list || [];
@@ -51,8 +53,13 @@ export class PastrieDetailsComponent implements OnInit {
     }
   }
 
-  preference(id: string, button: HTMLButtonElement) {
+  preference(id: string) {
+    const filter = this.pastries.find(p => p.id === id);
+    const index = this.favoritePastriesId.findIndex(favoritePastrie => favoritePastrie.id === id);
+
+    if(filter && this.favoritePastriesId.length < 3) this.favoritePastriesId.push(filter);
+    else if(filter && this.favoritePastriesId.length === 3) this.favoritePastriesId.splice(index, 1);
+
     this.changePreference.emit(id); // émettre l'id de la pâtisserie vers le parent
-    this.pastriesButton.emit(button);
   }
 }
