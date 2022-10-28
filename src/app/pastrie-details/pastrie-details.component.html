@@ -1,0 +1,11 @@
+<div *ngIf="pastrie" style="border: solid 1px red">
+    <h1>Liste des ingrédients:</h1>
+    <ul *ngIf="ingredients">
+        <li *ngFor="let ingredient of ingredients">
+            <p>{{ ingredient }}</p>
+        </li>
+        <button (click)="modifyOrder()">{{ sens ? 'desc' : 'asc' }}</button>
+        <button (click)="preference(pastrie.id, button)" #button>Choice</button>
+        <p>{{ pastrie.priority }}</p>
+    </ul>
+</div>

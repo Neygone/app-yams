@@ -1,0 +1,22 @@
+<h1>{{ titlePage }}</h1>
+
+<app-search (searchValue)="pastries"></app-search>
+
+<ul *ngIf="filteredPastries">
+    <li *ngFor="let pastrie of filteredPastries" (click)="onSelect(pastrie)">
+        <span class="badge badge-info">{{ pastrie.id }}</span> {{ pastrie.name }}
+        <p>Quantity: {{ pastrie.quantity }}</p>
+    </li>
+</ul>
+
+<div class="col-sm-4 video">
+    <app-pastrie-details [pastrie]="selectedPastrie" (changePreference)="changeParentPreference($event)" (pastriesButton)="button"></app-pastrie-details>
+</div>
+
+<div *ngIf="start > 0">
+    <button (click)="start = start - end / 2; end = end / 2; changePages()">Précédent</button>
+</div>
+
+<div *ngIf="end < pastries.length">
+    <button (click)="start = end; end = end * 2; changePages()">Suivant</button>
+</div>
