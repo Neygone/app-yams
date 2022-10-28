@@ -6,10 +6,14 @@
         <li *ngFor="let ingredient of ingredients">
             <p>{{ ingredient }}</p>
         </li>
+
         <button (click)="modifyOrder()">{{ sens ? 'desc' : 'asc' }}</button>
+
         <div *ngIf="favoritePastriesId.length < 3 || favoritePastriesId.length === 3 && pastrie.priority === 'favorite'">
             <button (click)="preference(pastrie.id)">Choice</button>
         </div>
+
+        <button (click)="hideDetails()">Hide Pastrie Details</button>
         <p>{{ pastrie.priority }}</p>
     </ul>
 </div>

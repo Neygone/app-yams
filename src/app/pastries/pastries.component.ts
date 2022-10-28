@@ -19,7 +19,6 @@ export class PastriesComponent implements OnInit {
   ingredients: Array<string> | undefined; // Tableau des ingrédients d'une seule pâtisserie.
   favoritePastries: Array<Pastrie> = [];
   selectedPastrie: Pastrie | null = null;
-  button: HTMLButtonElement | undefined;
   start: number = 0;
   end: number = this.pastries.length / 2;
   searchInput: string = '';
@@ -30,35 +29,28 @@ export class PastriesComponent implements OnInit {
     this.changePages();
   }
 
+  // Sélectionne une pâtisserie.
   onSelect(pastrie: Pastrie): void {
     this.selectedPastrie = pastrie;
   }
 
-  // NON FINI !
+  // Change la priorité de la pâtisserie.
   changeParentPreference(id: string): void {
     const pastrie = this.pastries.find(p => p.id === id);
-    if(pastrie !== undefined) {
-      pastrie?.priority === Favorite.NOFAV ? pastrie.priority = Favorite.FAV : pastrie.priority = Favorite.NOFAV;
-        if(pastrie.priority === Favorite.FAV) {
-          if(this.favoritePastries.length < 3) {
-            this.favoritePastries.push(pastrie);
-          }
-        }
-        else {
-          const index = this.favoritePastries.findIndex(p => p.id === id);
-          this.favoritePastries.splice(index, 1);
-        }
-    }
+    if(pastrie !== undefined) pastrie?.priority === Favorite.NOFAV ? pastrie.priority = Favorite.FAV : pastrie.priority = Favorite.NOFAV;
   }
 
+  // Changer la page des pâtisseries.
   changePages(): void {
     this.filteredPastries = this.service.paginate(this.start, this.end);
   }
 
+  // Retourner le nombre de pâtisseries.
   count(): number {
     return this.pastries.length;
   }
 
+  // Rechercher une ou plusieurs pâtisseries à partir d'un texte rentré dans un input.
   searchPastries(word: string): void {
     this.searchInput = word;
     this.filteredPastries = this.service.search(word);

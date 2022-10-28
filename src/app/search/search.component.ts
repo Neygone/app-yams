@@ -16,6 +16,7 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Effectuer une recherche de pâtisserie(s) sans soumettre un formulaire.
   onChangeEmit(word: string) {
     this.newValue = word;
     this.word.emit(word);
